@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+*.log
+.env
+.env.local
+npm-debug.log*
+
+# Prisma
+prisma/*.db
+
+# IDE
+.idea
+.vscode

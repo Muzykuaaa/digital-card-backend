@@ -1,0 +1,61 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Profile {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  links       Link[]
+  skills      Skill[]
+  experience  Experience[]
+  projects    Project[]
+
+  @@map("profiles")
+}
+
+model Link {
+  id      Int     @id @default(autoincrement())
+  label   String
+  url     String
+  profileId Int
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@map("links")
+}
+
+model Skill {
+  id      Int     @id @default(autoincrement())
+  name    String
+  profileId Int
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@map("skills")
+}
+
+model Experience {
+  id           Int     @id @default(autoincrement())
+  company      String
+  position     String
+  period       String
+  achievements String[]
+  profileId    Int
+  profile      Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@map("experience")
+}
+
+model Project {
+  id      Int     @id @default(autoincrement())
+  name    String
+  url     String
+  profileId Int
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@map("projects")
+}
