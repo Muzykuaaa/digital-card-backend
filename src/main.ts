@@ -7,9 +7,12 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
   app.useStaticAssets(join(__dirname, '..', '..', 'public'));
-  await app.listen(3000);
-  console.log(`Business card page: http://localhost:3000/`);
-  console.log(`GraphQL endpoint: http://localhost:3000/graphql`);
+
+  // PORT is injected by Railway and other PaaS providers.
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
+  console.log(`Business card page: http://localhost:${port}/`);
+  console.log(`GraphQL endpoint: http://localhost:${port}/graphql`);
 }
 
 void bootstrap();
