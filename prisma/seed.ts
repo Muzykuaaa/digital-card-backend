@@ -10,9 +10,9 @@ const demoProfile = {
     'проектирую схемы БД в PostgreSQL/Prisma, разворачиваю сервисы в Docker. ' +
     'Интересна long-term разработка продуктов с понятной бизнес-логикой.',
   links: [
-    { label: 'GitHub', url: 'https://github.com/example' },
-    { label: 'Telegram', url: 'https://t.me/example' },
-    { label: 'Email', url: 'mailto:example@example.com' },
+    { label: 'GitHub', url: 'https://github.com/Muzykuaaa' },
+    { label: 'Telegram', url: 'https://t.me/chraaaack' },
+    { label: 'Email', url: 'mailto:nnen15100@gmail.com' },
   ],
   skills: [
     { name: 'TypeScript', category: 'Языки' },

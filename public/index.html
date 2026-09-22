@@ -6,122 +6,119 @@
   <title>Илья — Backend TypeScript Developer</title>
   <style>
     :root {
-      --bg: #0f1115;
-      --surface: #171a21;
-      --surface-2: #1e232e;
-      --border: #2a3040;
-      --text: #e6e9ef;
-      --muted: #9aa3b2;
-      --accent: #4f8cff;
-      --accent-soft: rgba(79, 140, 255, 0.12);
+      --bg: #fafafa;
+      --text: #1a1a1a;
+      --muted: #5f6368;
+      --line: #e3e3e3;
+      --card: #fff;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Georgia', 'Times New Roman', serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
-    .container { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px; }
 
-    .header {
-      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
-      padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 40px;
+    /* Header */
+    .head { margin-bottom: 24px; }
+    .head h1 {
+      font-size: 34px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 4px;
     }
-    .avatar {
-      width: 84px; height: 84px; border-radius: 20px; flex-shrink: 0;
-      background: linear-gradient(135deg, #4f8cff 0%, #7c5cff 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px; font-weight: 700; color: #fff; letter-spacing: 1px;
+    .head .role {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 14px; color: var(--muted); letter-spacing: 0.4px;
+      margin-bottom: 12px;
     }
-    .header h1 { font-size: 28px; font-weight: 700; }
-    .header .role { color: var(--accent); font-size: 15px; margin-top: 2px; }
-    .links { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-    .links a {
-      color: var(--muted); text-decoration: none; font-size: 14px;
-      padding: 5px 12px; border: 1px solid var(--border); border-radius: 999px;
-      transition: all .15s ease;
+    .contacts { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; }
+    .contacts a {
+      color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      margin-right: 18px; padding-bottom: 1px;
     }
-    .links a:hover { color: var(--accent); border-color: var(--accent); }
+    .contacts a:hover { border-bottom-color: var(--text); }
 
-    .summary {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px 28px; margin-bottom: 40px;
-      color: var(--muted); font-size: 15.5px;
+    .intro {
+      font-size: 17px; color: var(--text);
+      padding: 24px 0; border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line); margin-bottom: 48px;
     }
 
+    /* Section headings */
     h2 {
-      font-size: 19px; font-weight: 600; margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 20px;
     }
-    h2::before { content: ''; width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
-    section { margin-bottom: 48px; }
+    section { margin-bottom: 56px; }
 
-    .skills-grid { display: grid; gap: 20px; }
-    .skill-group h3 { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 6px 14px; font-size: 14px;
+    /* Skills — plain grouped list */
+    .skill-cat { margin-bottom: 14px; font-size: 16px; }
+    .skill-cat b {
+      font-weight: 400; color: var(--muted); font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 13.5px; margin-right: 6px;
     }
-    .tag.hl { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 
-    .timeline { position: relative; padding-left: 24px; }
-    .timeline::before { content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
-    .job { position: relative; margin-bottom: 28px; }
-    .job::before {
-      content: ''; position: absolute; left: -24px; top: 7px;
-      width: 14px; height: 14px; border-radius: 50%;
-      background: var(--bg); border: 3px solid var(--accent);
-    }
-    .job .position { font-weight: 600; font-size: 16px; }
-    .job .company { color: var(--accent); font-size: 14.5px; margin-top: 1px; }
-    .job .period { color: var(--muted); font-size: 13.5px; margin: 6px 0 10px; }
+    /* Experience */
+    .job { margin-bottom: 32px; }
+    .job:last-child { margin-bottom: 0; }
+    .job .pos { font-size: 18px; }
+    .job .org { font-size: 15px; color: var(--muted); margin: 2px 0 0; }
+    .job .per { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; color: var(--muted); margin: 4px 0 12px; }
     .job ul { list-style: none; }
-    .job li {
-      color: var(--muted); font-size: 14.5px; padding-left: 18px; position: relative; margin-bottom: 6px;
-    }
-    .job li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+    .job li { font-size: 15.5px; color: var(--text); padding-left: 20px; position: relative; margin-bottom: 5px; }
+    .job li::before { content: '·'; position: absolute; left: 4px; color: var(--muted); }
 
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .project {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 22px; transition: border-color .15s ease;
-      display: flex; flex-direction: column; gap: 10px;
+    /* Projects */
+    .proj { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .proj:first-of-type { border-top: 1px solid var(--line); }
+    .proj:last-of-type { margin-bottom: 0; }
+    .proj a {
+      font-size: 17px; color: var(--text); text-decoration: none;
+      font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 600;
     }
-    .project:hover { border-color: var(--accent); }
-    .project .name { font-weight: 600; font-size: 16px; color: var(--text); text-decoration: none; }
-    .project .name:hover { color: var(--accent); }
-    .project .desc { color: var(--muted); font-size: 14px; flex-grow: 1; }
-    .project .stack { display: flex; flex-wrap: wrap; gap: 6px; }
-    .project .stack span {
-      font-size: 12px; color: var(--accent); background: var(--accent-soft);
-      padding: 3px 10px; border-radius: 6px;
+    .proj a:hover { text-decoration: underline; }
+    .proj p { font-size: 15px; color: var(--muted); margin: 6px 0 8px; }
+    .proj .stack {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 12.5px; color: var(--muted);
     }
+    .proj .stack i { font-style: normal; }
+    .proj .stack i:not(:last-child)::after { content: ' ·'; }
 
-    .footer {
-      margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
-      color: var(--muted); font-size: 13.5px; text-align: center;
+    /* Photo */
+    .photo {
+      width: 96px; height: 96px; border-radius: 50%;
+      border: 1px solid var(--line);
+      float: right; margin-left: 24px; overflow: hidden;
+      background: #efefef;
     }
-    .footer a { color: var(--accent); text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
+    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .error {
-      background: #2d1517; border: 1px solid #7f2b30; color: #f3b6b8;
-      border-radius: 14px; padding: 24px; text-align: center;
+    .foot {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 12.5px; color: var(--muted);
+      border-top: 1px solid var(--line); padding-top: 20px;
     }
+    .foot a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); }
+    .foot a:hover { border-bottom-color: var(--text); }
+
+    .error { color: #a33; font-size: 15px; padding: 24px 0; }
+
     @media (max-width: 600px) {
-      .container { padding: 32px 16px 64px; }
-      .header { gap: 16px; }
-      .header h1 { font-size: 24px; }
+      .wrap { padding: 40px 20px 72px; }
+      .head h1 { font-size: 28px; }
+      .photo { float: none; margin: 0 0 16px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="root"><p style="color:var(--muted)">Загрузка профиля…</p></div>
-    <div class="footer">
+  <div class="wrap">
+    <div id="root"></div>
+    <div class="foot">
       Данные получены через GraphQL API · <a href="/graphql" target="_blank">Apollo Sandbox</a>
     </div>
   </div>
@@ -140,82 +137,67 @@
       }
     `;
 
-    const el = (html) => {
-      const t = document.createElement('template');
-      t.innerHTML = html.trim();
-      return t.content.firstElementChild;
-    };
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) =>
       ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
     function renderProfile(p) {
       const root = document.getElementById('root');
-      root.innerHTML = '';
+      const parts = [];
 
-      const initials = esc(p.name.trim().slice(0, 1));
-
-      const header = el(`
-        <div class="header">
-          <div class="avatar">${initials}</div>
-          <div>
-            <h1>${esc(p.name)}</h1>
-            <div class="role">Backend TypeScript Developer</div>
-            <div class="links">
-              ${p.links.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join('')}
-            </div>
+      parts.push(`
+        <div class="head">
+          <div class="photo"><img src="/photo.jpg" alt="${esc(p.name)}" onerror="this.parentNode.style.display='none'" /></div>
+          <h1>${esc(p.name)}</h1>
+          <div class="role">Backend TypeScript Developer</div>
+          <div class="contacts">
+            ${p.links.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join('')}
           </div>
         </div>`);
-      root.appendChild(header);
 
-      root.appendChild(el(`<div class="summary">${esc(p.description)}</div>`));
+      parts.push(`<div class="intro">${esc(p.description)}</div>`);
 
       if (p.skills.length) {
-        const byCategory = new Map();
+        const byCat = new Map();
         for (const s of p.skills) {
-          if (!byCategory.has(s.category)) byCategory.set(s.category, []);
-          byCategory.get(s.category).push(s.name);
+          if (!byCat.has(s.category)) byCat.set(s.category, []);
+          byCat.get(s.category).push(s.name);
         }
-        const core = ['TypeScript', 'Node.js', 'NestJS', 'GraphQL', 'Prisma', 'PostgreSQL', 'Docker'];
-        const skillsSection = el(`<section><h2>Навыки</h2><div class="skills-grid"></div></section>`);
-        const grid = skillsSection.querySelector('.skills-grid');
-        for (const [category, names] of byCategory) {
-          grid.appendChild(el(`
-            <div class="skill-group">
-              <h3>${esc(category)}</h3>
-              <div class="tags">${names.map((n) => `<span class="tag${core.includes(n) ? ' hl' : ''}">${esc(n)}</span>`).join('')}</div>
-            </div>`));
-        }
-        root.appendChild(skillsSection);
+        parts.push(`
+          <section>
+            <h2>Навыки</h2>
+            ${[...byCat].map(([cat, names]) =>
+              `<div class="skill-cat"><b>${esc(cat)}:</b> ${names.map(esc).join(', ')}</div>`).join('')}
+          </section>`);
       }
 
       if (p.experience.length) {
-        const expSection = el(`<section><h2>Опыт работы</h2><div class="timeline"></div></section>`);
-        const timeline = expSection.querySelector('.timeline');
-        for (const job of p.experience) {
-          timeline.appendChild(el(`
-            <div class="job">
-              <div class="position">${esc(job.position)}</div>
-              <div class="company">${esc(job.company)}</div>
-              <div class="period">${esc(job.period)}</div>
-              <ul>${job.achievements.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
-            </div>`));
-        }
-        root.appendChild(expSection);
+        parts.push(`
+          <section>
+            <h2>Опыт работы</h2>
+            ${p.experience.map((j) => `
+              <div class="job">
+                <div class="pos">${esc(j.position)}</div>
+                <div class="org">${esc(j.company)}</div>
+                <div class="per">${esc(j.period)}</div>
+                <ul>${j.achievements.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
+              </div>`).join('')}
+          </section>`);
       }
 
       if (p.projects.length) {
-        const projSection = el(`<section><h2>Проекты</h2><div class="projects-grid"></div></section>`);
-        const grid = projSection.querySelector('.projects-grid');
-        for (const pr of p.projects) {
-          grid.appendChild(el(`
-            <div class="project">
-              <a class="name" href="${esc(pr.url)}" target="_blank" rel="noopener">${esc(pr.name)} ↗</a>
-              <div class="desc">${esc(pr.description)}</div>
-              <div class="stack">${pr.techStack.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
-            </div>`));
-        }
-        root.appendChild(projSection);
+        parts.push(`
+          <section>
+            <h2>Проекты</h2>
+            ${p.projects.map((pr) => `
+              <div class="proj">
+                <a href="${esc(pr.url)}" target="_blank" rel="noopener">${esc(pr.name)}</a>
+                <p>${esc(pr.description)}</p>
+                <div class="stack">${pr.techStack.map((t) => `<i>${esc(t)}</i>`).join('')}</div>
+              </div>`).join('')}
+          </section>`);
       }
+
+      root.innerHTML = parts.join('');
     }
 
     async function load() {
@@ -226,7 +208,7 @@
           body: JSON.stringify({ query: QUERY }),
         });
         const json = await res.json();
-        if (json.errors || !json.data.profile) throw new Error(json.errors?.[0]?.message || 'profile is empty');
+        if (json.errors || !json.data.profile) throw new Error(json.errors?.[0]?.message || 'профиль пуст');
         renderProfile(json.data.profile);
       } catch (e) {
         document.getElementById('root').innerHTML =
