@@ -7,4 +7,7 @@ export class Skill {
 
   @Field()
   declare name: string;
+
+  @Field()
+  declare category: string;
 }

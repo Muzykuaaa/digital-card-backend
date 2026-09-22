@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Илья — Backend TypeScript Developer</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --surface: #171a21;
+      --surface-2: #1e232e;
+      --border: #2a3040;
+      --text: #e6e9ef;
+      --muted: #9aa3b2;
+      --accent: #4f8cff;
+      --accent-soft: rgba(79, 140, 255, 0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .container { max-width: 880px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    .header {
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+      padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 40px;
+    }
+    .avatar {
+      width: 84px; height: 84px; border-radius: 20px; flex-shrink: 0;
+      background: linear-gradient(135deg, #4f8cff 0%, #7c5cff 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; font-weight: 700; color: #fff; letter-spacing: 1px;
+    }
+    .header h1 { font-size: 28px; font-weight: 700; }
+    .header .role { color: var(--accent); font-size: 15px; margin-top: 2px; }
+    .links { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .links a {
+      color: var(--muted); text-decoration: none; font-size: 14px;
+      padding: 5px 12px; border: 1px solid var(--border); border-radius: 999px;
+      transition: all .15s ease;
+    }
+    .links a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .summary {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px 28px; margin-bottom: 40px;
+      color: var(--muted); font-size: 15.5px;
+    }
+
+    h2 {
+      font-size: 19px; font-weight: 600; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    h2::before { content: ''; width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+    section { margin-bottom: 48px; }
+
+    .skills-grid { display: grid; gap: 20px; }
+    .skill-group h3 { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 14px; font-size: 14px;
+    }
+    .tag.hl { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+    .job { position: relative; margin-bottom: 28px; }
+    .job::before {
+      content: ''; position: absolute; left: -24px; top: 7px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--bg); border: 3px solid var(--accent);
+    }
+    .job .position { font-weight: 600; font-size: 16px; }
+    .job .company { color: var(--accent); font-size: 14.5px; margin-top: 1px; }
+    .job .period { color: var(--muted); font-size: 13.5px; margin: 6px 0 10px; }
+    .job ul { list-style: none; }
+    .job li {
+      color: var(--muted); font-size: 14.5px; padding-left: 18px; position: relative; margin-bottom: 6px;
+    }
+    .job li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .project {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px; transition: border-color .15s ease;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .project:hover { border-color: var(--accent); }
+    .project .name { font-weight: 600; font-size: 16px; color: var(--text); text-decoration: none; }
+    .project .name:hover { color: var(--accent); }
+    .project .desc { color: var(--muted); font-size: 14px; flex-grow: 1; }
+    .project .stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .project .stack span {
+      font-size: 12px; color: var(--accent); background: var(--accent-soft);
+      padding: 3px 10px; border-radius: 6px;
+    }
+
+    .footer {
+      margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
+      color: var(--muted); font-size: 13.5px; text-align: center;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    .error {
+      background: #2d1517; border: 1px solid #7f2b30; color: #f3b6b8;
+      border-radius: 14px; padding: 24px; text-align: center;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px 64px; }
+      .header { gap: 16px; }
+      .header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="root"><p style="color:var(--muted)">Загрузка профиля…</p></div>
+    <div class="footer">
+      Данные получены через GraphQL API · <a href="/graphql" target="_blank">Apollo Sandbox</a>
+    </div>
+  </div>
+
+  <script>
+    const QUERY = `
+      query {
+        profile {
+          name
+          description
+          links { label url }
+          skills { name category }
+          experience { company position period achievements }
+          projects { name description url techStack }
+        }
+      }
+    `;
+
+    const el = (html) => {
+      const t = document.createElement('template');
+      t.innerHTML = html.trim();
+      return t.content.firstElementChild;
+    };
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    function renderProfile(p) {
+      const root = document.getElementById('root');
+      root.innerHTML = '';
+
+      const initials = esc(p.name.trim().slice(0, 1));
+
+      const header = el(`
+        <div class="header">
+          <div class="avatar">${initials}</div>
+          <div>
+            <h1>${esc(p.name)}</h1>
+            <div class="role">Backend TypeScript Developer</div>
+            <div class="links">
+              ${p.links.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join('')}
+            </div>
+          </div>
+        </div>`);
+      root.appendChild(header);
+
+      root.appendChild(el(`<div class="summary">${esc(p.description)}</div>`);
+
+      if (p.skills.length) {
+        const byCategory = new Map();
+        for (const s of p.skills) {
+          if (!byCategory.has(s.category)) byCategory.set(s.category, []);
+          byCategory.get(s.category).push(s.name);
+        }
+        const core = ['TypeScript', 'Node.js', 'NestJS', 'GraphQL', 'Prisma', 'PostgreSQL', 'Docker'];
+        const skillsSection = el(`<section><h2>Навыки</h2><div class="skills-grid"></div></section>`);
+        const grid = skillsSection.querySelector('.skills-grid');
+        for (const [category, names] of byCategory) {
+          grid.appendChild(el(`
+            <div class="skill-group">
+              <h3>${esc(category)}</h3>
+              <div class="tags">${names.map((n) => `<span class="tag${core.includes(n) ? ' hl' : ''}">${esc(n)}</span>`).join('')}</div>
+            </div>`));
+        }
+        root.appendChild(skillsSection);
+      }
+
+      if (p.experience.length) {
+        const expSection = el(`<section><h2>Опыт работы</h2><div class="timeline"></div></section>`);
+        const timeline = expSection.querySelector('.timeline');
+        for (const job of p.experience) {
+          timeline.appendChild(el(`
+            <div class="job">
+              <div class="position">${esc(job.position)}</div>
+              <div class="company">${esc(job.company)}</div>
+              <div class="period">${esc(job.period)}</div>
+              <ul>${job.achievements.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>
+            </div>`));
+        }
+        root.appendChild(expSection);
+      }
+
+      if (p.projects.length) {
+        const projSection = el(`<section><h2>Проекты</h2><div class="projects-grid"></div></section>`);
+        const grid = projSection.querySelector('.projects-grid');
+        for (const pr of p.projects) {
+          grid.appendChild(el(`
+            <div class="project">
+              <a class="name" href="${esc(pr.url)}" target="_blank" rel="noopener">${esc(pr.name)} ↗</a>
+              <div class="desc">${esc(pr.description)}</div>
+              <div class="stack">${pr.techStack.map((t) => `<span>${esc(t)}</span>`).join('')}</div>
+            </div>`));
+        }
+        root.appendChild(projSection);
+      }
+    }
+
+    async function load() {
+      try {
+        const res = await fetch('/graphql', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ query: QUERY }),
+        });
+        const json = await res.json();
+        if (json.errors || !json.data.profile) throw new Error(json.errors?.[0]?.message || 'profile is empty');
+        renderProfile(json.data.profile);
+      } catch (e) {
+        document.getElementById('root').innerHTML =
+          `<div class="error">Не удалось загрузить профиль: ${esc(e.message)}</div>`;
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

@@ -1,12 +1,15 @@
-import { INestApplication } from '@nestjs/common';
+import { join } from 'path';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
+  app.useStaticAssets(join(__dirname, '..', '..', 'public'));
   await app.listen(3000);
-  console.log(`GraphQL endpoint ready at http://localhost:3000/graphql`);
+  console.log(`Business card page: http://localhost:3000/`);
+  console.log(`GraphQL endpoint: http://localhost:3000/graphql`);
 }
 
 void bootstrap();

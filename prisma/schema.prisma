@@ -20,42 +20,49 @@ model Profile {
 }
 
 model Link {
-  id      Int     @id @default(autoincrement())
-  label   String
-  url     String
+  id        Int     @id @default(autoincrement())
+  label     String
+  url       String
   profileId Int
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
+  @@unique([profileId, label, url])
   @@map("links")
 }
 
 model Skill {
-  id      Int     @id @default(autoincrement())
-  name    String
+  id        Int     @id @default(autoincrement())
+  name      String
+  category  String
   profileId Int
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
+  @@unique([profileId, name])
   @@map("skills")
 }
 
 model Experience {
-  id           Int     @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   company      String
   position     String
   period       String
   achievements String[]
   profileId    Int
-  profile      Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile      Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
+  @@unique([profileId, company, position])
   @@map("experience")
 }
 
 model Project {
-  id      Int     @id @default(autoincrement())
-  name    String
-  url     String
-  profileId Int
-  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  url         String
+  techStack   String[]
+  profileId   Int
+  profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
+  @@unique([profileId, name])
   @@map("projects")
 }

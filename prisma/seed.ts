@@ -1,52 +1,76 @@
 import { PrismaClient } from '@prisma/client';
 
 // Replace this object with real data when needed:
-// upserts keyed by unique fields keep repeated seed runs idempotent.
+// upsert keyed by profile id + full replace of child records
+// keeps repeated seed runs idempotent.
 const demoProfile = {
-  key: 'demo-profile',
   name: 'Илья',
   description:
-    'Начинающий backend/fullstack-разработчик. Пишу на TypeScript и Node.js, ' +
-    'строю REST и GraphQL API, работаю с PostgreSQL и Prisma. Учу NestJS ' +
-    'и применяю Docker в повседневной разработке.',
+    'Backend TypeScript-разработчик. Строю API на NestJS и GraphQL, ' +
+    'проектирую схемы БД в PostgreSQL/Prisma, разворачиваю сервисы в Docker. ' +
+    'Интересна long-term разработка продуктов с понятной бизнес-логикой.',
   links: [
     { label: 'GitHub', url: 'https://github.com/example' },
     { label: 'Telegram', url: 'https://t.me/example' },
     { label: 'Email', url: 'mailto:example@example.com' },
   ],
   skills: [
-    { name: 'TypeScript' },
-    { name: 'Node.js' },
-    { name: 'NestJS' },
-    { name: 'PostgreSQL' },
-    { name: 'Prisma' },
-    { name: 'GraphQL' },
-    { name: 'Docker' },
+    { name: 'TypeScript', category: 'Языки' },
+    { name: 'Node.js', category: 'Языки' },
+    { name: 'NestJS', category: 'Backend' },
+    { name: 'GraphQL', category: 'API' },
+    { name: 'REST API', category: 'API' },
+    { name: 'PostgreSQL', category: 'Базы данных' },
+    { name: 'CockroachDB', category: 'Базы данных' },
+    { name: 'Prisma', category: 'Базы данных' },
+    { name: 'Docker', category: 'Инфраструктура' },
+    { name: 'Git', category: 'Инфраструктура' },
+    { name: 'S3 storage', category: 'Инфраструктура' },
+    { name: 'CI/CD', category: 'Инфраструктура' },
+    { name: 'Jest', category: 'Тестирование' },
+    { name: 'Claude Code', category: 'Инструменты' },
   ],
   experience: [
     {
-      company: 'Учебные проекты',
-      position: 'Backend developer',
+      company: 'Учебные и pet-проекты (backend)',
+      position: 'TypeScript backend developer',
       period: '2024 — настоящее время',
       achievements: [
-        'Разработал REST API для сервиса управления задачами на NestJS и Prisma',
-        'Настроил CI и Docker-окружение для pet-проектов',
+        'Спроектировал и реализовал несколько backend-сервисов на NestJS: REST и GraphQL API, аутентификация, роли, валидация DTO',
+        'Настроил миграции Prisma и автоматический seed для всех проектов, чтобы окружение поднималось одной командой',
+        'Покрываю код unit-тестами на Jest и интеграционными тестами API',
       ],
     },
     {
-      company: 'Личная практика / open source',
+      company: 'Личные проекты и open source',
       position: 'Fullstack developer',
       period: '2023 — 2024',
       achievements: [
-        'Собрал несколько pet-проектов на TypeScript: API, интеграции, работа с БД',
-        'Писал код в open source репозиториях и небольшие утилиты для себя',
+        'Собрал pet-проекты на TypeScript с PostgreSQL и Docker Compose: от схемы БД до CI',
+        'Работал с файловым хранилищем по S3-совместимому API (загрузка/выдача файлов, пресайнед-ссылки)',
+        'Писал мелкие правки и утилиты в open source репозиториях',
       ],
     },
   ],
   projects: [
-    { name: 'Task manager API', url: 'https://github.com/example/task-manager-api' },
-    { name: 'Digital card backend', url: 'https://github.com/example/digital-card-backend' },
-    { name: 'URL shortener', url: 'https://github.com/example/url-shortener' },
+    {
+      name: 'Charity fund API',
+      description: 'REST + GraphQL API платформы благотворительного фонда: кампании, донаты, отчётность',
+      url: 'https://github.com/example/charity-fund-api',
+      techStack: ['NestJS', 'GraphQL', 'Prisma', 'PostgreSQL', 'Docker'],
+    },
+    {
+      name: 'Media storage service',
+      description: 'Сервис файлового хранилища на S3: загрузка, пресайнед-ссылки, метаданные в БД',
+      url: 'https://github.com/example/media-storage-service',
+      techStack: ['NestJS', 'S3', 'Prisma', 'CockroachDB', 'Docker'],
+    },
+    {
+      name: 'Digital card backend',
+      description: 'Цифровая визитка: NestJS + GraphQL + Prisma, автодеплой базы при старте контейнера',
+      url: 'https://github.com/example/digital-card-backend',
+      techStack: ['NestJS', 'GraphQL', 'Prisma', 'PostgreSQL', 'Docker'],
+    },
   ],
 };
 
@@ -65,23 +89,27 @@ async function main() {
     },
   });
 
-  await prisma.link.deleteMany({ where: { profileId: profile.id } });
-  await prisma.skill.deleteMany({ where: { profileId: profile.id } });
-  await prisma.experience.deleteMany({ where: { profileId: profile.id } });
-  await prisma.project.deleteMany({ where: { profileId: profile.id } });
+  await prisma.$transaction([
+    prisma.link.deleteMany({ where: { profileId: profile.id } }),
+    prisma.skill.deleteMany({ where: { profileId: profile.id } }),
+    prisma.experience.deleteMany({ where: { profileId: profile.id } }),
+    prisma.project.deleteMany({ where: { profileId: profile.id } }),
+  ]);
 
-  await prisma.link.createMany({
-    data: demoProfile.links.map((link) => ({ ...link, profileId: profile.id })),
-  });
-  await prisma.skill.createMany({
-    data: demoProfile.skills.map((skill) => ({ ...skill, profileId: profile.id })),
-  });
-  await prisma.experience.createMany({
-    data: demoProfile.experience.map((item) => ({ ...item, profileId: profile.id })),
-  });
-  await prisma.project.createMany({
-    data: demoProfile.projects.map((project) => ({ ...project, profileId: profile.id })),
-  });
+  await prisma.$transaction([
+    prisma.link.createMany({
+      data: demoProfile.links.map((link) => ({ ...link, profileId: profile.id })),
+    }),
+    prisma.skill.createMany({
+      data: demoProfile.skills.map((skill) => ({ ...skill, profileId: profile.id })),
+    }),
+    prisma.experience.createMany({
+      data: demoProfile.experience.map((item) => ({ ...item, profileId: profile.id })),
+    }),
+    prisma.project.createMany({
+      data: demoProfile.projects.map((project) => ({ ...project, profileId: profile.id })),
+    }),
+  ]);
 
   console.log(`Seeded profile "${profile.name}" (id=${profile.id})`);
 }

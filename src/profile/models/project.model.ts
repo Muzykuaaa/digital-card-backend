@@ -9,5 +9,11 @@ export class Project {
   declare name: string;
 
   @Field()
+  declare description: string;
+
+  @Field()
   declare url: string;
+
+  @Field(() => [String])
+  declare techStack: string[];
 }
