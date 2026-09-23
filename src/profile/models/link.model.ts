@@ -1,13 +1,13 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
-@ObjectType({ description: 'Professional link: GitHub, Telegram, email, etc.' })
+@ObjectType()
 export class Link {
   @Field(() => ID)
   declare id: number;
 
-  @Field({ description: 'Short link label' })
+  @Field()
   declare label: string;
 
-  @Field({ description: 'Link target URL' })
+  @Field()
   declare url: string;
 }

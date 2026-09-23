@@ -23,18 +23,10 @@ const profileWithRelations = {
 
 describe('ProfileService', () => {
   let service: ProfileService;
-  let prisma: {
-    profile: { findFirst: jest.Mock };
-    skill: { findMany: jest.Mock };
-    project: { findMany: jest.Mock };
-  };
+  let prisma: { profile: { findFirst: jest.Mock } };
 
   beforeEach(async () => {
-    prisma = {
-      profile: { findFirst: jest.fn() },
-      skill: { findMany: jest.fn() },
-      project: { findMany: jest.fn() },
-    };
+    prisma = { profile: { findFirst: jest.fn() } };
 
     const module = await Test.createTestingModule({
       providers: [ProfileService, { provide: PrismaService, useValue: prisma }],
@@ -64,19 +56,5 @@ describe('ProfileService', () => {
 
     await expect(service.getProfile()).rejects.toThrow(NotFoundException);
     await expect(service.getProfile()).rejects.toThrow('Profile not found');
-  });
-
-  it('returns skills ordered by id', async () => {
-    prisma.skill.findMany.mockResolvedValue(profileWithRelations.skills);
-
-    await expect(service.getSkills()).resolves.toEqual(profileWithRelations.skills);
-    expect(prisma.skill.findMany).toHaveBeenCalledWith({ orderBy: { id: 'asc' } });
-  });
-
-  it('returns projects ordered by id', async () => {
-    prisma.project.findMany.mockResolvedValue(profileWithRelations.projects);
-
-    await expect(service.getProjects()).resolves.toEqual(profileWithRelations.projects);
-    expect(prisma.project.findMany).toHaveBeenCalledWith({ orderBy: { id: 'asc' } });
   });
 });

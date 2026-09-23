@@ -47,11 +47,7 @@ describe('GraphQL API (e2e)', () => {
       providers: [
         {
           provide: PrismaService,
-          useValue: {
-            profile: { findFirst: jest.fn().mockResolvedValue(profile) },
-            skill: { findMany: jest.fn().mockResolvedValue(profile.skills) },
-            project: { findMany: jest.fn().mockResolvedValue(profile.projects) },
-          },
+          useValue: { profile: { findFirst: jest.fn().mockResolvedValue(profile) } },
         },
         ProfileService,
         ProfileResolver,
@@ -96,20 +92,6 @@ describe('GraphQL API (e2e)', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.errors).toBeDefined();
-  });
-
-  it('returns skills as a standalone query', async () => {
-    const res = await query(`query { skills { name category } }`);
-
-    expect(res.status).toBe(200);
-    expect(res.body.data.skills).toEqual([{ name: 'TypeScript', category: 'Языки' }]);
-  });
-
-  it('returns projects as a standalone query', async () => {
-    const res = await query(`query { projects { name url } }`);
-
-    expect(res.status).toBe(200);
-    expect(res.body.data.projects).toEqual([{ name: 'Digital card', url: 'https://github.com/x/y' }]);
   });
 
   it('exposes the schema types via introspection', async () => {

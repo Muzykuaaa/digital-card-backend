@@ -1,19 +1,19 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
-@ObjectType({ description: 'Portfolio project' })
+@ObjectType()
 export class Project {
   @Field(() => ID)
   declare id: number;
 
-  @Field({ description: 'Project name' })
+  @Field()
   declare name: string;
 
-  @Field({ description: 'One-line project summary' })
+  @Field()
   declare description: string;
 
-  @Field({ description: 'Repository or live project URL' })
+  @Field()
   declare url: string;
 
-  @Field(() => [String], { description: 'Technologies used' })
+  @Field(() => [String])
   declare techStack: string[];
 }
