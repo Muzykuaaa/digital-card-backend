@@ -4,26 +4,26 @@ import { Skill } from './skill.model';
 import { Experience } from './experience.model';
 import { Project } from './project.model';
 
-@ObjectType()
+@ObjectType({ description: 'Digital business card of the developer' })
 export class Profile {
   @Field(() => ID)
   declare id: number;
 
-  @Field()
+  @Field({ description: 'Full name' })
   declare name: string;
 
-  @Field()
+  @Field({ description: 'Short professional summary' })
   declare description: string;
 
-  @Field(() => [Link])
+  @Field(() => [Link], { description: 'Professional links (GitHub, Telegram, email)' })
   declare links: Link[];
 
-  @Field(() => [Skill])
+  @Field(() => [Skill], { description: 'Skills grouped by category' })
   declare skills: Skill[];
 
-  @Field(() => [Experience])
+  @Field(() => [Experience], { description: 'Work experience entries' })
   declare experience: Experience[];
 
-  @Field(() => [Project])
+  @Field(() => [Project], { description: 'Portfolio projects with repository URLs' })
   declare projects: Project[];
 }
