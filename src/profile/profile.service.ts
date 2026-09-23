@@ -5,8 +5,8 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ProfileService {
   constructor(private readonly prisma: PrismaService) {}
 
-  getProfile() {
-    return this.prisma.profile.findFirst({
+  async getProfile() {
+    const profile = await this.prisma.profile.findFirst({
       include: {
         links: { orderBy: { id: 'asc' } },
         skills: { orderBy: { id: 'asc' } },
@@ -14,10 +14,6 @@ export class ProfileService {
         projects: { orderBy: { id: 'asc' } },
       },
     });
-  }
-
-  async getProfileOrFail() {
-    const profile = await this.getProfile();
     if (!profile) {
       throw new NotFoundException('Profile not found. Run the database seed.');
     }
