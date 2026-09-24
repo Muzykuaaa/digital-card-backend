@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class Project {
@@ -17,6 +17,6 @@ export class Project {
   @Field(() => [String])
   declare techStack: string[];
 
-  @Field()
+  @Field(() => Int)
   declare stars: number;
 }
