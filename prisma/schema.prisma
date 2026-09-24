@@ -16,6 +16,7 @@ model Profile {
   experience  Experience[]
   projects    Project[]
 
+
   @@map("profiles")
 }
 
@@ -61,6 +62,7 @@ model Project {
   url         String
   techStack   String[]
   profileId   Int
+  stars       Int          @default(0)
   profile     Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   @@unique([profileId, name])

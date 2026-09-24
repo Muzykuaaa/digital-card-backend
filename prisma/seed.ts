@@ -58,18 +58,21 @@ const demoProfile = {
       description: 'REST + GraphQL API платформы благотворительного фонда: кампании, донаты, отчётность',
       url: 'https://github.com/Muzykuaaa/charity-fund-api',
       techStack: ['NestJS', 'GraphQL', 'Prisma', 'PostgreSQL', 'Docker'],
+      stars: 15,
     },
     {
       name: 'Media storage service',
       description: 'Сервис файлового хранилища на S3: загрузка, пресайнед-ссылки, метаданные в БД',
       url: 'https://github.com/Muzykuaaa/media-storage-service',
       techStack: ['NestJS', 'S3', 'Prisma', 'CockroachDB', 'Docker'],
+      stars: 15,
     },
     {
       name: 'Digital card backend',
       description: 'Цифровая визитка: NestJS + GraphQL + Prisma, автодеплой базы при старте контейнера',
       url: 'https://github.com/Muzykuaaa/digital-card-backend',
       techStack: ['NestJS', 'GraphQL', 'Prisma', 'PostgreSQL', 'Docker'],
+      stars: 15,
     },
   ],
 };

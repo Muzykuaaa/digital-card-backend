@@ -16,4 +16,7 @@ export class Project {
 
   @Field(() => [String])
   declare techStack: string[];
+
+  @Field()
+  declare stars: number;
 }
